@@ -20,14 +20,36 @@ object ProdutoService {
         if (AndroidUtils.isInternetDisponivel(context)) {
             val url = "$host/disciplinas"
             val json = HttpHelper.get(url)
+            var produtos = parserJson<List<Produto>>(json)
+
+            for (p in produtos) {
+                saveOf(p)
+            }
 
             Log.d(TAG, json)
 
-            return parserJson<List<Produto>>(json)
+            return return produtos
         } else {
-            return ArrayList()
+            var dao = DataBaseManager.getProdutoDAO()
+            return dao.findAll()
         }
     }
+
+    fun saveOf(produto: Produto): Boolean {
+        val dao = DataBaseManager.getProdutoDAO()
+        //val dao = DataBaseManager.getVendedorDAO()
+
+        if (!existeProduto(produto)) {
+            dao.insert(produto)
+        }
+        return true
+   }
+
+    fun existeProduto(produto: Produto): Boolean {
+        val dao = DataBaseManager.getProdutoDAO()
+        return dao.getById(produto.id) != null
+    }
+
     fun save(produto: Produto): Response {
         //alterar host/disciplina para host/produtos
         val json = HttpHelper.post("$host/disciplinas", produto.toJson())

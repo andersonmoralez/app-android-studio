@@ -43,5 +43,7 @@ dependencies {
     //OKHTTP
     implementation 'com.squareup.okhttp3:okhttp:3.8.0'
 
-    
+    //ROOM
+    implementation 'androidx.room:room-runtime:2.2.3'
+    kapt 'androidx.room:room-compiler:2.2.3'
 }

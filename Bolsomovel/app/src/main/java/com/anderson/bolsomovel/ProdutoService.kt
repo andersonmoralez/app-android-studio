@@ -43,7 +43,7 @@ object ProdutoService {
             dao.insert(produto)
         }
         return true
-   }
+    }
 
     fun existeProduto(produto: Produto): Boolean {
         val dao = DataBaseManager.getProdutoDAO()
@@ -51,16 +51,29 @@ object ProdutoService {
     }
 
     fun save(produto: Produto): Response {
-        //alterar host/disciplina para host/produtos
-        val json = HttpHelper.post("$host/disciplinas", produto.toJson())
-        return parserJson<Response>(json)
+        if (AndroidUtils.isInternetDisponivel(BolsomovelApplication.getInstance().applicationContext)) {
+            //alterar host/disciplina para host/produtos
+            val json = HttpHelper.post("$host/disciplinas", produto.toJson())
+            return parserJson<Response>(json)
+        } else {
+            saveOf(produto)
+            return Response("OK", "Disciplina salva no dispositivo")
+        }
 
     }
+
     fun delete(produto: Produto): Response {
-        //alterar host/disciplina para host/produtos
-        val url = "$host/disciplinas/${produto.id}"
-        val json = HttpHelper.delete(url)
-        return parserJson<Response>(json)
+        if (AndroidUtils.isInternetDisponivel(BolsomovelApplication.getInstance().applicationContext)) {
+            //alterar host/disciplina para host/produtos
+            val url = "$host/disciplinas/${produto.id}"
+            val json = HttpHelper.delete(url)
+            return parserJson<Response>(json)
+        } else {
+            val dao = DataBaseManager.getProdutoDAO()
+            dao.delete(produto)
+            return Response(status = "OK", msg = "Dados salvos localmente")
+        }
+
     }
 
     inline fun <reified T> parserJson(json: String): T {

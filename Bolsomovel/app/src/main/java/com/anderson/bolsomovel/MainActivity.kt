@@ -55,20 +55,18 @@ class MainActivity : AppCompatActivity() {
         var intent = Intent(this, TelaInicial::class.java)
 
         /*novo login*/
-        var contains: Int = 0
+        var contains: Boolean = false
 
         for (v in this.vendedores) {
             if (nameUser == v.nome && passwordUser == v.senha) {
                 Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
                 progressBar.visibility = View.INVISIBLE
                 startActivity(intent)
-                contains = 1
-            } else {
-                contains = 0
+                contains = true
             }
         }
 
-        if (contains == 0) {
+        if (contains == false) {
             Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
         }

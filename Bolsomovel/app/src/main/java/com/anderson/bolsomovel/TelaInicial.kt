@@ -67,12 +67,13 @@ class TelaInicial : AppCompatActivity() {
 
         if (id == R.id.action_buscar) {
             Toast.makeText(this, "Clicou em Buscar", Toast.LENGTH_LONG).show()
-        //evento do botao adicionar
         } else if (id == R.id.action_adicionar) {
+            //evento do botao adicionar
             val intent = Intent(context, ProdutoCadastroActivity::class.java)
             startActivityForResult(intent, REQUEST_CADASTRO)
         } else if (id == R.id.action_atualizar) {
-            Toast.makeText(this, "Clicou em Atualizar", Toast.LENGTH_LONG).show()
+            //evento do botao atualizar
+            taskProdutos()
         } else if (id == R.id.action_adicionar) {
             val intent = Intent(context, ProdutoCadastroActivity::class.java)
             startActivityForResult(intent, REQUEST_CADASTRO)

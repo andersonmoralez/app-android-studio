@@ -1,5 +1,6 @@
 package com.anderson.bolsomovel
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,9 +8,14 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
+import com.anderson.bolsomovel.VendedorService.getVendedores
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.adapter_vendedor.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val context: Context get() = this
+    private var vendedores =listOf<Vendedor>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +54,26 @@ class MainActivity : AppCompatActivity() {
 
         var intent = Intent(this, TelaInicial::class.java)
 
+        /*novo login*/
+        var contains: Int = 0
+
+        for (v in this.vendedores) {
+            if (nameUser == v.nome && passwordUser == v.senha) {
+                Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.INVISIBLE
+                startActivity(intent)
+                contains = 1
+            } else {
+                contains = 0
+            }
+        }
+
+        if (contains == 0) {
+            Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.INVISIBLE
+        }
+
+        /*login padrao
         if (nameUser == "aluno" && passwordUser == "impacta") {
             Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
@@ -55,7 +81,14 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
-        }
+        }*/
 
+    }
+
+    /*recebe os vendedores*/
+    private val vendedor = taskVendedores()
+
+    fun taskVendedores() {
+        vendedores = VendedorService.getVendedores(context)
     }
 }

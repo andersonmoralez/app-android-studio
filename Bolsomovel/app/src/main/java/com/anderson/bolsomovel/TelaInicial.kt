@@ -76,8 +76,10 @@ class TelaInicial : AppCompatActivity() {
         } else if (id == R.id.action_adicionar) {
             val intent = Intent(context, ProdutoCadastroActivity::class.java)
             startActivityForResult(intent, REQUEST_CADASTRO)
+          //evento do botao configurar
         } else if (id == R.id.action_config) {
-            Toast.makeText(this, "Clicou em Configurar", Toast.LENGTH_LONG).show()
+            val intent = Intent(context, TelaVendedor::class.java)
+            startActivityForResult(intent, REQUEST_CADASTRO)
         } else if (id == android.R.id.home) {
             finish()
         }

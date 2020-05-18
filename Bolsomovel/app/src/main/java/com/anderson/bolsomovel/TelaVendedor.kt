@@ -35,8 +35,12 @@ class TelaVendedor: AppCompatActivity () {
     }
 
     fun taskVendedores() {
-        vendedores = VendedorService.getVendedores(context)
-        recyclerVendedores?.adapter = VendedorAdapter(vendedores) {onClickVendedor(it)}
+        Thread {
+            this.vendedores = VendedorService.getVendedores(context)
+            runOnUiThread{
+                recyclerVendedores?.adapter = VendedorAdapter(vendedores) {onClickVendedor(it)}
+            }
+        }.start()
     }
 
     fun onClickVendedor(vendedor: Vendedor) {

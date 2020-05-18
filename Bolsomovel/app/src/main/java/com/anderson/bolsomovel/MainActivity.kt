@@ -71,6 +71,8 @@ class MainActivity : AppCompatActivity() {
             progressBar.visibility = View.INVISIBLE
         }
 
+
+
         /*login padrao
         if (nameUser == "aluno" && passwordUser == "impacta") {
             Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
@@ -79,7 +81,8 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
-        }*/
+        }
+        */
 
     }
 
@@ -87,6 +90,10 @@ class MainActivity : AppCompatActivity() {
     private val vendedor = taskVendedores()
 
     fun taskVendedores() {
-        vendedores = VendedorService.getVendedores(context)
+        Thread {
+            vendedores = VendedorService.getVendedores(context)
+        }
     }
 }
+
+

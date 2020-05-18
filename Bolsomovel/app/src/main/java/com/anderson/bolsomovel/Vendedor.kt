@@ -1,14 +1,23 @@
 package com.anderson.bolsomovel
 
-class Vendedor {
-    var id: Long = 0
+import com.google.gson.GsonBuilder
+import java.io.Serializable
+
+class Vendedor: Serializable {
+    var codVendedor: Int = 0
     var nome: String = ""
-    var codigoVendedor: Int = 0
-    var email: String = ""
-    var senha:  String = ""
+    var emailVendedor: String = ""
+    var telefone: String = ""
+    var celular: String = ""
+    var funcionario: String = ""
+    var senha: String = ""
 
     override fun toString(): String {
         return "Vendedor(nome='$nome')"
+    }
+
+    fun toJson(): String {
+        return GsonBuilder().create().toJson(this)
     }
 
 }

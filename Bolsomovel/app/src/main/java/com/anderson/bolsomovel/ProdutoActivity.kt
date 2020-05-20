@@ -22,8 +22,6 @@ class ProdutoActivity : AppCompatActivity() {
 
         produto = intent.getSerializableExtra("produto") as Produto
 
-
-
         //implementar action bar
         setSupportActionBar(toolbar)
         supportActionBar?.title = produto?.nome

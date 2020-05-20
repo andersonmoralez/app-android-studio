@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,6 +56,33 @@ class MainActivity : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
+        }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // abre o produto caso clique na notificacao com app em segundo plano
+        abrirProduto()
+
+        // mostra no log o tokem do firebase
+        Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
+
+    }
+
+    fun abrirProduto() {
+        // verifica se existe id do produto na intent
+        if (intent.hasExtra("produtoId")) {
+            Thread {
+                var produtoId = intent.getStringExtra("produtoId")?.toLong()!!
+                val produto = ProdutoService.getProduto(this, produtoId)
+                runOnUiThread {
+                    val intentProduto = Intent(this, ProdutoActivity::class.java)
+                    intentProduto.putExtra("produto", produto)
+                    startActivity(intentProduto)
+                }
+            }.start()
         }
 
     }

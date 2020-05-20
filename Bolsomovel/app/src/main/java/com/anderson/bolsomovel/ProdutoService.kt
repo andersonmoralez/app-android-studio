@@ -3,15 +3,22 @@ package com.anderson.bolsomovel
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
-import java.net.URL
 
 object ProdutoService {
 
     //trocar pela URL da sua api
     val host = "https://fesousa.pythonanywhere.com"
     val TAG = "WS_LMSApp"
+
+
+    fun getProduto(context: Context, id: Long): Produto? {
+        val url = "$host/disciplinas/${id}"
+        val json = HttpHelper.get(url)
+        val produto = parserJson<Produto>(json)
+
+        return produto
+    }
 
     fun getProdutos(context: Context): List<Produto> {
 
@@ -28,12 +35,14 @@ object ProdutoService {
             return ArrayList()
         }
     }
+
     fun save(produto: Produto): Response {
         //alterar host/disciplina para host/produtos
         val json = HttpHelper.post("$host/disciplinas", produto.toJson())
         return parserJson<Response>(json)
 
     }
+
     fun delete(produto: Produto): Response {
         //alterar host/disciplina para host/produtos
         val url = "$host/disciplinas/${produto.id}"

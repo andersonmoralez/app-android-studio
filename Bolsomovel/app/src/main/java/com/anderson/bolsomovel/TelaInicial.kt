@@ -84,6 +84,7 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val id = item?.itemId
 
         if (id == R.id.action_buscar) { Toast.makeText(this, "Clicou em Buscar", Toast.LENGTH_LONG).show()}
+
         //evento do botao adicionar
          else if (id == R.id.action_adicionar) {
             val intent = Intent(context, ProdutoCadastroActivity::class.java)
@@ -116,7 +117,7 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 startActivityForResult(intent, REQUEST_CADASTRO)}
 
             //evento navigation drawer nova localizacao
-            R.id.nav_maps_locazacao -> {Toast.makeText(this, "Clicou em Localização", Toast.LENGTH_LONG).show()}
+            R.id.nav_maps_locazacao -> {startActivity(Intent(this, MapasActivity::class.java))}
         }
         cardView.closeDrawer(GravityCompat.START)
         return true

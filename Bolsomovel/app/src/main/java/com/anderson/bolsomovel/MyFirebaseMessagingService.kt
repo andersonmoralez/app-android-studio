@@ -15,10 +15,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
 
         Prefs.setString("FB_TOKEN", token!!)
     }
-<<<<<<< HEAD
-=======
 
->>>>>>> AC05
     //executa apenas com app em aberto
     override fun onMessageReceived(mensagemRemota: RemoteMessage?) {
         Log.d(TAG, "onMessageReceived")
@@ -34,14 +31,8 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
                 corpo = "$corpo ($produtoId)"
             }
 
-<<<<<<< HEAD
-            val intent = Intent(this, ProdutoActivity::class.java)
-            NotificationUtil.create(this, 1, intent, titulo!!, corpo!!)
-
-=======
             val intent = Intent(this, ProdutoCadastroActivity::class.java)
             NotificationUtil.create(this, 1, intent, titulo!!, corpo!!)
->>>>>>> AC05
             showNotification(mensagemRemota)
         }
     }
@@ -49,11 +40,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
     private fun showNotification(mensagemRemota: RemoteMessage) {
 
         // Intent para abrir quando clicar na notificação
-<<<<<<< HEAD
-        val intent = Intent(this, ProdutoActivity::class.java)
-=======
         val intent = Intent(this, ProdutoCadastroActivity::class.java)
->>>>>>> AC05
         // se título for nulo, utilizar nome no app
         val titulo = mensagemRemota?.notification?.title?: getString(R.string.app_name)
         var mensagem = mensagemRemota?.notification?.body!!

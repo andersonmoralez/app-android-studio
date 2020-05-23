@@ -50,10 +50,6 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             produtos = ProdutoService.getProdutos(context)
             runOnUiThread {
                 recyclerProdutos?.adapter = ProdutoAdapter(produtos) { onClickProduto(it) }
-<<<<<<< HEAD
-                enviaNotificacao(produtos.get(2))
-=======
->>>>>>> AC05
             }
         }.start()
     }
@@ -125,20 +121,11 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         cardView.closeDrawer(GravityCompat.START)
         return true
     }
-<<<<<<< HEAD
-
-=======
-    /*
->>>>>>> AC05
     fun enviaNotificacao(produto: Produto) {
         val intent = Intent(this, ProdutoActivity::class.java)
         intent.putExtra("produto", produto)
         NotificationUtil.create(this, 1 ,intent, "Título - Bolsomovel", "Você tem um novo produto em ${produto.nome}")
     }
-<<<<<<< HEAD
-=======
-    */
->>>>>>> AC05
 }
 
 

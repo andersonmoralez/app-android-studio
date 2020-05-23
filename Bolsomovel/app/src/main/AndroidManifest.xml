@@ -13,10 +13,6 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-<<<<<<< HEAD
-=======
-
->>>>>>> AC05
         <activity android:name=".DebugActivity"></activity>
         <activity
             android:name=".ProdutoActivity"
@@ -25,13 +21,10 @@
         <activity
             android:name=".TelaInicial"
             android:theme="@style/App.Theme.Toolbar" />
-<<<<<<< HEAD
-        <activity android:name=".MainActivity">
-=======
+
         <activity
             android:name=".MainActivity"
             android:parentActivityName=".TelaInicial">
->>>>>>> AC05
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

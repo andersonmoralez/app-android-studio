@@ -1,9 +1,6 @@
 package com.anderson.bolsomovel
 
-<<<<<<< HEAD
-=======
 import android.content.Context
->>>>>>> AC05
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,23 +9,18 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
-<<<<<<< HEAD
-=======
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.messaging.RemoteMessage
->>>>>>> AC05
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-<<<<<<< HEAD
-=======
     private val context: Context get() = this
 
     private var REQUEST_CADASTRO = 1
 
     var logNotification: Boolean = false
 
->>>>>>> AC05
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -45,34 +37,12 @@ class MainActivity : AppCompatActivity() {
             checkBoxLogin.isChecked = lembrar
         }
 
-<<<<<<< HEAD
-        button.setOnClickListener { onClickLogin() }
-    }
-
-    fun onClickLogin() {
-=======
         if(this.intent.hasExtra("produtoId")) {
             button.setOnClickListener { onClickLoginNotification() }
         } else {button.setOnClickListener { onClickLogin() }}
     }
 
-    /*
-    override fun onResume() {
-        super.onResume()
-
-        // abre o produto caso clique na notificacao com app em segundo plano
-        //abrirProduto()
-        button.setOnClickListener { onClickLoginNotification() }
-
-        // mostra no log o tokem do firebase
-        Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
-
-    }
-    */
-
     fun onClickLogin() {
-
->>>>>>> AC05
         val nameUser = inputUser.text.toString()
         val passwordUser = password.text.toString()
 
@@ -101,23 +71,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-<<<<<<< HEAD
-    override fun onResume() {
-        super.onResume()
-
-        // abre o produto caso clique na notificacao com app em segundo plano
-        abrirProduto()
-
-        // mostra no log o tokem do firebase
-        Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
-
-    }
-
-    fun abrirProduto() {
-        // verifica se existe id do produto na intent
-        if (intent.hasExtra("produtoId")) {
-=======
-    /**/
     fun onClickLoginNotification() {
         val nameUser = inputUser.text.toString()
         val passwordUser = password.text.toString()
@@ -127,7 +80,7 @@ class MainActivity : AppCompatActivity() {
         if (checkBoxLogin.isChecked) {
             Prefs.setString("lembrarNome", nameUser)
             Prefs.setString("lembrarSenha", passwordUser)
-        } else{
+        } else {
             Prefs.setString("lembrarNome", "")
             Prefs.setString("lembrarSenha", "")
         }
@@ -138,6 +91,10 @@ class MainActivity : AppCompatActivity() {
         if (nameUser == "aluno" && passwordUser == "impacta") {
             Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
+
+            // mostra no log o tokem do firebase
+            Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
+
             val intent = Intent(context, ProdutoCadastroActivity::class.java)
             startActivityForResult(intent, REQUEST_CADASTRO)
         } else {
@@ -147,32 +104,22 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-
-    /**/
     fun abrirProduto() {
         // verifica se existe id do produto na intent
         if (this.intent.hasExtra("produtoId")) {
->>>>>>> AC05
+
             Thread {
                 var produtoId = intent.getStringExtra("produtoId")?.toLong()!!
                 val produto = ProdutoService.getProduto(this, produtoId)
                 runOnUiThread {
                     val intentProduto = Intent(this, ProdutoActivity::class.java)
                     intentProduto.putExtra("produto", produto)
-<<<<<<< HEAD
-=======
 
->>>>>>> AC05
                     startActivity(intentProduto)
                 }
             }.start()
         }
 
     }
-<<<<<<< HEAD
-=======
 
-
-
->>>>>>> AC05
 }

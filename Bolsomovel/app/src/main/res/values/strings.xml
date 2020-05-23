@@ -16,4 +16,10 @@
     <string name="nav_open">Abrir</string>
     <string name="nav_close">Fechar</string>
 
+    //credenciais google maps
+    <string name="API_KEY">AIzaSyBCdg3sIi2l8wpl7pccViALxTauWMms1Q4</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

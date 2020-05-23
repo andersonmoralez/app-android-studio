@@ -32,7 +32,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             }
 
             val intent = Intent(this, ProdutoCadastroActivity::class.java)
-            NotificationUtil.create(this, 1, intent, titulo!!, corpo!!)
+            NotificationUtils.create(this, 1, intent, titulo!!, corpo!!)
             showNotification(mensagemRemota)
         }
     }
@@ -53,7 +53,7 @@ class MyFirebaseMessagingService: FirebaseMessagingService() {
             val produto = ProdutoService.getProduto(this, produtoId)
             intent.putExtra("produto", produto)
         }
-        NotificationUtil.create(this, 1, intent, titulo, mensagem)
+        NotificationUtils.create(this, 1, intent, titulo, mensagem)
     }
 
 }

@@ -1,13 +1,11 @@
 package com.anderson.bolsomovel
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
@@ -84,6 +82,7 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         val id = item?.itemId
 
         if (id == R.id.action_buscar) { Toast.makeText(this, "Clicou em Buscar", Toast.LENGTH_LONG).show()}
+
         //evento do botao adicionar
          else if (id == R.id.action_adicionar) {
             val intent = Intent(context, ProdutoCadastroActivity::class.java)
@@ -116,7 +115,7 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
                 startActivityForResult(intent, REQUEST_CADASTRO)}
 
             //evento navigation drawer nova localizacao
-            R.id.nav_maps_locazacao -> {Toast.makeText(this, "Clicou em Localização", Toast.LENGTH_LONG).show()}
+            R.id.nav_maps_locazacao -> {startActivity(Intent(this, MapasActivity::class.java))}
         }
         cardView.closeDrawer(GravityCompat.START)
         return true
@@ -124,7 +123,7 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
     fun enviaNotificacao(produto: Produto) {
         val intent = Intent(this, ProdutoActivity::class.java)
         intent.putExtra("produto", produto)
-        NotificationUtil.create(this, 1 ,intent, "Título - Bolsomovel", "Você tem um novo produto em ${produto.nome}")
+        NotificationUtils.create(this, 1 ,intent, "Título - Bolsomovel", "Você tem um novo produto em ${produto.nome}")
     }
 }
 

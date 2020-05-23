@@ -8,7 +8,7 @@ import android.content.Intent
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 
-object NotificationUtil {
+object NotificationUtils {
     internal val CHANNEL_ID = "1"
 
     fun createChannel(context: Context) {

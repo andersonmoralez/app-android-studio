@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="400dp"
+    android:layout_height="260dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/cardVendedor"
+    android:layout_margin="6dp"
+    app:cardElevation="3dp"
+    app:cardPreventCornerOverlap="false"
+    app:cardUseCompatPadding="false"
+    app:cardCornerRadius="2dp"
+    android:foreground="?attr/selectableItemBackground">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="6dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/cardVendedorName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="20dp" />
+
+        <TextView
+            android:id="@+id/cardVendedorCodigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="183dp"
+            android:layout_marginRight="-296dp"
+            android:layout_marginBottom="34dp"
+            android:text="20dp" />
+
+        <TextView
+            android:id="@+id/cardVendedorEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="55dp"
+            android:layout_marginEnd="183dp"
+            android:layout_marginRight="-296dp"
+            android:layout_marginBottom="34dp"
+            android:text="20dp" />
+
+        <FrameLayout
+            android:layout_width="170dp"
+            android:layout_height="167dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
+            android:layout_marginEnd="229dp"
+            android:background="#FFFFFF"
+            android:elevation="3dp"
+            android:padding="1dp">
+
+
+            <ImageView
+                android:id="@+id/cardVendedorImg"
+                android:layout_marginTop="35dp"
+                android:layout_width="95dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/icon_user" />
+        </FrameLayout>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

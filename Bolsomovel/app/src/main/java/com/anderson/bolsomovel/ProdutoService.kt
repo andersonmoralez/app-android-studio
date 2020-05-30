@@ -3,8 +3,8 @@ package com.anderson.bolsomovel
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.google.gson.reflect.TypeToken
+import com.google.gson.GsonBuilder
 import java.net.URL
 
 object ProdutoService {
@@ -12,6 +12,15 @@ object ProdutoService {
     //trocar pela URL da sua api
     val host = "https://fesousa.pythonanywhere.com"
     val TAG = "WS_LMSApp"
+
+
+    fun getProduto(context: Context, id: Long): Produto? {
+        val url = "$host/disciplinas/${id}"
+        val json = HttpHelper.get(url)
+        val produto = parserJson<Produto>(json)
+
+        return produto
+    }
 
     fun getProdutos(context: Context): List<Produto> {
 

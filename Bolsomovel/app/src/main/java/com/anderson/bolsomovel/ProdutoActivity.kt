@@ -22,9 +22,7 @@ class ProdutoActivity : AppCompatActivity() {
 
         produto = intent.getSerializableExtra("produto") as Produto
 
-
-
-        //implementar action bar
+        //action bar
         setSupportActionBar(toolbar)
         supportActionBar?.title = produto?.nome
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

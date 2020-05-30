@@ -2,13 +2,19 @@ package com.anderson.bolsomovel
 
 import android.content.Context
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.graphics.Color
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import android.view.Window
+import android.view.WindowManager
 import android.widget.Toast
 import com.anderson.bolsomovel.VendedorService.getVendedores
+import androidx.core.content.ContextCompat.startActivity
+import com.google.firebase.messaging.RemoteMessage
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.adapter_vendedor.*
 
@@ -16,6 +22,10 @@ class MainActivity : AppCompatActivity() {
 
     private val context: Context get() = this
     private var vendedores =listOf<Vendedor>()
+
+    private var REQUEST_CADASTRO = 1
+
+    var logNotification: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +43,9 @@ class MainActivity : AppCompatActivity() {
             checkBoxLogin.isChecked = lembrar
         }
 
-        button.setOnClickListener { onClickLogin() }
+        if(this.intent.hasExtra("produtoId")) {
+            button.setOnClickListener { onClickLoginNotification() }
+        } else {button.setOnClickListener { onClickLogin() }}
     }
 
     fun onClickLogin() {
@@ -71,18 +83,6 @@ class MainActivity : AppCompatActivity() {
             progressBar.visibility = View.INVISIBLE
         }
 
-
-        /*login padrao
-        if (nameUser == "aluno" && passwordUser == "impacta") {
-            Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
-            progressBar.visibility = View.INVISIBLE
-            startActivity(intent)
-        } else {
-            Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
-            progressBar.visibility = View.INVISIBLE
-        }
-        */
-
     }
 
     /*recebe os vendedores*/
@@ -91,6 +91,58 @@ class MainActivity : AppCompatActivity() {
     fun taskVendedores() {
         Thread {vendedores = VendedorService.getVendedores(context)}.start()
     }
+
+    fun onClickLoginNotification() {
+        val nameUser = inputUser.text.toString()
+        val passwordUser = password.text.toString()
+
+        Prefs.setBoolean("lembrar", checkBoxLogin.isChecked)
+        // verificar se é para pembrar nome e senha
+        if (checkBoxLogin.isChecked) {
+            Prefs.setString("lembrarNome", nameUser)
+            Prefs.setString("lembrarSenha", passwordUser)
+        } else {
+            Prefs.setString("lembrarNome", "")
+            Prefs.setString("lembrarSenha", "")
+        }
+
+        progressBar.visibility = View.VISIBLE
+        //corrigir aqui
+        //abre o produto apos login
+        if (nameUser == "aluno" && passwordUser == "impacta") {
+            Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.INVISIBLE
+
+            // mostra no log o tokem do firebase
+            Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
+
+            val intent = Intent(context, ProdutoCadastroActivity::class.java)
+            startActivityForResult(intent, REQUEST_CADASTRO)
+        } else {
+            Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
+            progressBar.visibility = View.INVISIBLE
+        }
+
+    }
+
+    fun abrirProduto() {
+        // verifica se existe id do produto na intent
+        if (this.intent.hasExtra("produtoId")) {
+
+            Thread {
+                var produtoId = intent.getStringExtra("produtoId")?.toLong()!!
+                val produto = ProdutoService.getProduto(this, produtoId)
+                runOnUiThread {
+                    val intentProduto = Intent(this, ProdutoActivity::class.java)
+                    intentProduto.putExtra("produto", produto)
+
+                    startActivity(intentProduto)
+                }
+            }.start()
+        }
+
+    }
+
 }
 
 

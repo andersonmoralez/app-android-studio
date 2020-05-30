@@ -7,7 +7,10 @@
     android:id="@+id/cardView"
     android:fitsSystemWindows="true" >
 
+
+    <!--tela inicial-->
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -20,17 +23,30 @@
             android:layout_height="match_parent">
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerProdutos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/recyclerProdutos"
                 android:cacheColorHint="@android:color/transparent"
                 android:clipToPadding="false"
-
                 android:listSelector="@android:color/transparent"
                 android:scrollbars="vertical" />
 
         </ScrollView>
+
     </LinearLayout>
+
+    <!--navigation drawer-->
+    <com.google.android.material.navigation.NavigationView
+        android:layout_width="300dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+        android:id="@+id/menu_lateral"
+        android:layout_gravity="start"
+        app:headerLayout="@layout/menu_lateral_cabecalho"
+        app:menu="@menu/menu_lateral"
+        android:fitsSystemWindows="true">
+    </com.google.android.material.navigation.NavigationView>
+
 </androidx.drawerlayout.widget.DrawerLayout>
 
 

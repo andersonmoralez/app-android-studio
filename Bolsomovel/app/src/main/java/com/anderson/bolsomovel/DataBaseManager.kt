@@ -17,4 +17,8 @@ object DataBaseManager {
     fun getProdutoDAO(): ProdutoDAO {
         return dbInstance.produtoDAO()
     }
+
+    fun getVendedorDAO(): VendedorDAO {
+        return dbInstance.vendedorDAO()
+    }
 }

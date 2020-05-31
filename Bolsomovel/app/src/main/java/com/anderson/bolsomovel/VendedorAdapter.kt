@@ -16,7 +16,8 @@ class VendedorAdapter (val vendedores: List<Vendedor>,
         val cardView: CardView
 
         init {
-            cardNome = view.findViewById(R.id.cardVendedoName)
+            cardNome = view.findViewById(R.id.cardVendedorName)
+            //cardCodigo = view.findViewById(R.id.cardVendedorCodigo)
             cardView = view.findViewById(R.id.cardVendedor)
         }
     }
@@ -37,7 +38,7 @@ class VendedorAdapter (val vendedores: List<Vendedor>,
         val vendedor = vendedores[position]
 
         holder.cardNome.text = vendedor.nome
-
+        //holder.cardCodigo.text = vendedor.codVendedor
         //implemented progressbar here
 
         holder.itemView.setOnClickListener {onClick(vendedor)}

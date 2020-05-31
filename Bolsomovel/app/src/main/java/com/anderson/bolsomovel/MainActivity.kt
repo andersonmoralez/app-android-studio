@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     private val context: Context get() = this
     private var vendedores =listOf<Vendedor>()
-
     private var REQUEST_CADASTRO = 1
 
     var logNotification: Boolean = false
@@ -82,7 +81,6 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
         }
-
     }
 
     /*recebe os vendedores*/
@@ -107,22 +105,29 @@ class MainActivity : AppCompatActivity() {
         }
 
         progressBar.visibility = View.VISIBLE
-        //corrigir aqui
+
         //abre o produto apos login
-        if (nameUser == "aluno" && passwordUser == "impacta") {
-            Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
-            progressBar.visibility = View.INVISIBLE
+        var contains: Boolean = false
 
-            // mostra no log o tokem do firebase
-            Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
+        for (v in vendedores) {
+            if (nameUser == v.nome && passwordUser == v.senha) {
+                Toast.makeText(this, "Bem vindo usuário: $nameUser!", Toast.LENGTH_SHORT).show()
+                progressBar.visibility = View.INVISIBLE
 
-            val intent = Intent(context, ProdutoCadastroActivity::class.java)
-            startActivityForResult(intent, REQUEST_CADASTRO)
-        } else {
+                // mostra no log o tokem do firebase
+                Log.d("firebase", "Firebase Token: ${Prefs.getString("FB_TOKEN")}")
+
+                val intent = Intent(context, ProdutoCadastroActivity::class.java)
+                startActivityForResult(intent, REQUEST_CADASTRO)
+
+                contains = true
+            }
+        }
+
+        if (contains == false) {
             Toast.makeText(this, "Usuário ou Senha incorreto!", Toast.LENGTH_SHORT).show()
             progressBar.visibility = View.INVISIBLE
         }
-
     }
 
     fun abrirProduto() {
@@ -142,7 +147,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
 }
 
 

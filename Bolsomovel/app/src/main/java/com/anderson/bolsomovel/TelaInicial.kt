@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.navigation.NavigationView
 import kotlinx.android.synthetic.main.activity_tela_inicial.*
@@ -27,7 +28,7 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_inicial)
 
-        recyclerProdutos?.layoutManager = LinearLayoutManager(context)
+        recyclerProdutos?.setLayoutManager(GridLayoutManager(this, 2))
         recyclerProdutos?.itemAnimator = DefaultItemAnimator()
         recyclerProdutos?.setHasFixedSize(true)
 

@@ -37,7 +37,7 @@ object ProdutoService {
 
             Log.d(TAG, json)
 
-            return return produtos
+            return produtos
         } else {
             var dao = DataBaseManager.getProdutoDAO()
             return dao.findAll()

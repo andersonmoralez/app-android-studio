@@ -15,9 +15,8 @@ object VendedorService {
     fun getVendedores(context: Context): List<Vendedor> {
         if (AndroidUtils.isInternetDisponivel(context)) {
             val url = "$host/vendedores"
-            val json = URL(url).readText()
-            val dao = DataBaseManager.getVendedorDAO()
-            var vendedores = parserJson<MutableList<Vendedor>>(json)
+            val json = HttpHelper.get(url)
+            var vendedores = parserJson<List<Vendedor>>(json)
 
             for (v in vendedores) {
                 saveOf(v)
@@ -39,7 +38,7 @@ object VendedorService {
     fun saveOf(vendedor: Vendedor): Boolean {
         val dao = DataBaseManager.getVendedorDAO()
 
-        if(! existeVendedor(vendedor)) {
+        if(!existeVendedor(vendedor)) {
             dao.insert(vendedor)
         }
         return true

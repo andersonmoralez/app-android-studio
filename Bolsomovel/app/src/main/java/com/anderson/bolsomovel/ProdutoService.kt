@@ -14,12 +14,36 @@ object ProdutoService {
     val TAG = "WS_LMSApp"
 
 
-    fun getProduto(context: Context, id: Long): Produto? {
+    fun getProduto(context: Context, id: Long): Produto {
         val url = "$host/disciplinas/${id}"
         val json = HttpHelper.get(url)
         val produto = parserJson<Produto>(json)
 
         return produto
+    }
+
+    fun getListOneProduto(context: Context, id: Long) : List<Produto> {
+        val url = "$host/disciplinas"
+        val json = HttpHelper.get(url)
+        var produto = parserJson<List<Produto>>(json)
+
+        if (AndroidUtils.isInternetDisponivel(context)) {
+            for (p in produto) {
+                if (p.id == id) {
+                    produto = listOf(p)
+                }
+            }
+            return produto
+        } else {
+            var dao = DataBaseManager.getProdutoDAO()
+
+            for (p in dao.findAll()) {
+                if (p.id == id) {
+                 produto = listOf(p)
+                }
+            }
+            return produto
+        }
     }
 
     fun getProdutos(context: Context): List<Produto> {
@@ -46,7 +70,6 @@ object ProdutoService {
 
     fun saveOf(produto: Produto): Boolean {
         val dao = DataBaseManager.getProdutoDAO()
-        //val dao = DataBaseManager.getVendedorDAO()
 
         if (!existeProduto(produto)) {
             dao.insert(produto)

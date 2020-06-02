@@ -1,28 +1,33 @@
 package com.anderson.bolsomovel
 
+import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.view.GravityCompat
 import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_tela_inicial.*
 import kotlinx.android.synthetic.main.toolbar.*
 
 class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var produtos = listOf<Produto>()
+    private var produto = listOf<Produto>()
     private val context: Context get() = this
     private var REQUEST_CADASTRO = 1
     private var REQUEST_REMOVE = 2
-    var produto: Produto? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,13 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         configuraMenuLateral()
+
+        val fab: View = findViewById(R.id.button_add_fab)
+
+        fab.setOnClickListener {
+            val intent = Intent(context, ProdutoCadastroActivity::class.java)
+            startActivityForResult(intent, REQUEST_CADASTRO)
+        }
     }
 
     override fun onResume() {
@@ -52,6 +64,17 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
             }
         }.start()
     }
+
+    //populando a recyclerview com apenas um produto
+    fun taskProduto(id: Long) {
+        Thread {
+            produto = ProdutoService.getListOneProduto(context, id)
+            runOnUiThread {
+                recyclerProdutos?.adapter = ProdutoAdapter(produto) { onClickProduto(it) }
+            }
+        }.start()
+    }
+
 
     // tratamento do evento de clicar em uma disciplina
     fun onClickProduto(produto: Produto) {
@@ -76,6 +99,33 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
+
+        //serachview
+        val manager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchItem = menu?.findItem(R.id.action_buscar)
+        val searchView = searchItem?.actionView as SearchView
+
+        searchView.setSearchableInfo(manager.getSearchableInfo(componentName))
+
+        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchView.clearFocus()
+                searchView.setQuery("", false)
+                searchItem.collapseActionView()
+                //Toast.makeText(this@TelaInicial, "Looking for $query", Toast.LENGTH_LONG).show()
+
+                for (p in produtos) {
+                    if (query == p.nome) {
+                        Toast.makeText(this@TelaInicial, "Achamos um resultado para: $query", Toast.LENGTH_LONG).show()
+                        taskProduto(p.id)
+                    }
+                }
+                return true
+            }
+            override fun onQueryTextChange(newText: String?): Boolean {
+                return false
+            }
+        })
         return true
     }
 
@@ -84,23 +134,15 @@ class TelaInicial : AppCompatActivity(), NavigationView.OnNavigationItemSelected
 
         if (id == R.id.action_buscar) {
             Toast.makeText(this, "Clicou em Buscar", Toast.LENGTH_LONG).show()
-        } else if (id == R.id.action_adicionar) {
-            //evento do botao adicionar
-            val intent = Intent(context, ProdutoCadastroActivity::class.java)
-            startActivityForResult(intent, REQUEST_CADASTRO)
+          //evento do botao atualizar
         } else if (id == R.id.action_atualizar) {
-            //evento do botao atualizar
             taskProdutos()
-        } else if (id == R.id.action_adicionar) {
-            val intent = Intent(context, ProdutoCadastroActivity::class.java)
-            startActivityForResult(intent, REQUEST_CADASTRO)
           //evento do botao configurar
         } else if (id == R.id.action_config) {
             val intent = Intent(context, TelaVendedor::class.java)
             startActivityForResult(intent, REQUEST_CADASTRO)
-        } else if (id == android.R.id.home) {
-            finish()
-        }
+          //evento do botao voltar
+        } else if (id == android.R.id.home) {finish()}
 
         return super.onOptionsItemSelected(item)
     }

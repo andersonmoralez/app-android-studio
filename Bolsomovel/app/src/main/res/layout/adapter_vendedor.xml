@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="400dp"
-    android:layout_height="260dp"
+    android:layout_height="210dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/cardVendedor"
     android:layout_margin="6dp"
@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/cardVendedorName"
-            android:layout_marginLeft="26dp"
+            android:layout_marginLeft="10dp"
             android:layout_marginTop="16dp"
             android:text="20dp"/>
 
@@ -29,9 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dp"
-            android:layout_marginBottom="6dp"
-            android:layout_marginLeft="26dp"
-            android:background="#ffffff"
+            android:background="@color/colorPrimaryDark"
             android:elevation="3dp">
 
             <ImageView
@@ -39,7 +37,7 @@
                 android:layout_width="170dp"
                 android:layout_height="170dp"
                 android:layout_gravity="center_horizontal"
-                android:background="@drawable/users" />
+                android:background="@drawable/ic_person_black_24dp" />
         </FrameLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>
